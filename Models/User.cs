@@ -12,6 +12,6 @@ namespace Restaurant_Manage_Backened.Models
         public string Username { get; set; } = string.Empty;
         public byte[] PasswordHash { get; set; } = new byte[0];
         public byte[] PasswordSalt { get; set; } = new byte[0];
-        public Role Role { get; set; } = Role.Guest;
+        public Role Role { get; set; } = Role.Other;
     }
 }
