@@ -24,5 +24,7 @@ namespace Restaurant_Manage_Backened.Data
         public DbSet<Employee> Employees => Set<Employee>();
         public DbSet<Bank> Banks => Set<Bank>();
         public DbSet<Super> Supers => Set<Super>();
+        public DbSet<Designation> Designations => Set<Designation>();
+        public DbSet<Roles> Roles => Set<Roles>();
     }
 }
