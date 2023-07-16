@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Restaurant_Manage_Backened.Data;
 
@@ -11,9 +12,11 @@ using Restaurant_Manage_Backened.Data;
 namespace Restaurant_Manage_Backened.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230716154732_Customer Module")]
+    partial class CustomerModule
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,36 +24,6 @@ namespace Restaurant_Manage_Backened.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("IngredientsInventory", b =>
-                {
-                    b.Property<int>("IngredientsId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("InventoryId")
-                        .HasColumnType("int");
-
-                    b.HasKey("IngredientsId", "InventoryId");
-
-                    b.HasIndex("InventoryId");
-
-                    b.ToTable("IngredientsInventory");
-                });
-
-            modelBuilder.Entity("MenuOrders", b =>
-                {
-                    b.Property<int>("MenusId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("OrdersId")
-                        .HasColumnType("int");
-
-                    b.HasKey("MenusId", "OrdersId");
-
-                    b.HasIndex("OrdersId");
-
-                    b.ToTable("MenuOrders");
-                });
 
             modelBuilder.Entity("Restaurant_Manage_Backened.Models.Bank", b =>
                 {
@@ -233,6 +206,9 @@ namespace Restaurant_Manage_Backened.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("InventoryId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("MenuId")
                         .HasColumnType("int");
 
@@ -247,6 +223,8 @@ namespace Restaurant_Manage_Backened.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("InventoryId");
 
                     b.HasIndex("MenuId");
 
@@ -308,6 +286,9 @@ namespace Restaurant_Manage_Backened.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("OrdersId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Price")
                         .HasColumnType("int");
 
@@ -317,6 +298,8 @@ namespace Restaurant_Manage_Backened.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CustomerId");
+
+                    b.HasIndex("OrdersId");
 
                     b.ToTable("Menus");
                 });
@@ -346,29 +329,6 @@ namespace Restaurant_Manage_Backened.Migrations
                     b.HasIndex("CustomerId");
 
                     b.ToTable("Orders");
-                });
-
-            modelBuilder.Entity("Restaurant_Manage_Backened.Models.Reservations", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("CustomerId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("TableId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CustomerId");
-
-                    b.HasIndex("TableId");
-
-                    b.ToTable("Reservations");
                 });
 
             modelBuilder.Entity("Restaurant_Manage_Backened.Models.Roles", b =>
@@ -462,29 +422,6 @@ namespace Restaurant_Manage_Backened.Migrations
                     b.ToTable("Supers");
                 });
 
-            modelBuilder.Entity("Restaurant_Manage_Backened.Models.Tables", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("isTemporary")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("persons")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Tables");
-                });
-
             modelBuilder.Entity("Restaurant_Manage_Backened.Models.User", b =>
                 {
                     b.Property<int>("Id")
@@ -511,36 +448,6 @@ namespace Restaurant_Manage_Backened.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("IngredientsInventory", b =>
-                {
-                    b.HasOne("Restaurant_Manage_Backened.Models.Ingredients", null)
-                        .WithMany()
-                        .HasForeignKey("IngredientsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Restaurant_Manage_Backened.Models.Inventory", null)
-                        .WithMany()
-                        .HasForeignKey("InventoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("MenuOrders", b =>
-                {
-                    b.HasOne("Restaurant_Manage_Backened.Models.Menu", null)
-                        .WithMany()
-                        .HasForeignKey("MenusId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Restaurant_Manage_Backened.Models.Orders", null)
-                        .WithMany()
-                        .HasForeignKey("OrdersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Restaurant_Manage_Backened.Models.Employee", b =>
@@ -572,9 +479,15 @@ namespace Restaurant_Manage_Backened.Migrations
 
             modelBuilder.Entity("Restaurant_Manage_Backened.Models.Ingredients", b =>
                 {
+                    b.HasOne("Restaurant_Manage_Backened.Models.Inventory", "Inventory")
+                        .WithMany()
+                        .HasForeignKey("InventoryId");
+
                     b.HasOne("Restaurant_Manage_Backened.Models.Menu", null)
                         .WithMany("Ingredients")
                         .HasForeignKey("MenuId");
+
+                    b.Navigation("Inventory");
                 });
 
             modelBuilder.Entity("Restaurant_Manage_Backened.Models.Inventory", b =>
@@ -591,6 +504,10 @@ namespace Restaurant_Manage_Backened.Migrations
                     b.HasOne("Restaurant_Manage_Backened.Models.Customer", null)
                         .WithMany("Menus")
                         .HasForeignKey("CustomerId");
+
+                    b.HasOne("Restaurant_Manage_Backened.Models.Orders", null)
+                        .WithMany("Menus")
+                        .HasForeignKey("OrdersId");
                 });
 
             modelBuilder.Entity("Restaurant_Manage_Backened.Models.Orders", b =>
@@ -600,21 +517,6 @@ namespace Restaurant_Manage_Backened.Migrations
                         .HasForeignKey("CustomerId");
 
                     b.Navigation("Customer");
-                });
-
-            modelBuilder.Entity("Restaurant_Manage_Backened.Models.Reservations", b =>
-                {
-                    b.HasOne("Restaurant_Manage_Backened.Models.Customer", "Customer")
-                        .WithMany()
-                        .HasForeignKey("CustomerId");
-
-                    b.HasOne("Restaurant_Manage_Backened.Models.Tables", "Table")
-                        .WithMany()
-                        .HasForeignKey("TableId");
-
-                    b.Navigation("Customer");
-
-                    b.Navigation("Table");
                 });
 
             modelBuilder.Entity("Restaurant_Manage_Backened.Models.Shifts", b =>
@@ -645,6 +547,11 @@ namespace Restaurant_Manage_Backened.Migrations
             modelBuilder.Entity("Restaurant_Manage_Backened.Models.Menu", b =>
                 {
                     b.Navigation("Ingredients");
+                });
+
+            modelBuilder.Entity("Restaurant_Manage_Backened.Models.Orders", b =>
+                {
+                    b.Navigation("Menus");
                 });
 #pragma warning restore 612, 618
         }

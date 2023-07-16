@@ -46,5 +46,14 @@ namespace Restaurant_Manage_Backened.Data
         public DbSet<Super> Supers => Set<Super>();
         public DbSet<Designation> Designations => Set<Designation>();
         public DbSet<Roles> Roles => Set<Roles>();
+        public DbSet<Category> Categories => Set<Category>();
+        public DbSet<Customer> Customers => Set<Customer>();
+        public DbSet<Ingredients> Ingredients => Set<Ingredients>();
+        public DbSet<Inventory> Inventories => Set<Inventory>();
+        public DbSet<Menu> Menus => Set<Menu>();
+        public DbSet<Orders> Orders => Set<Orders>();
+        public DbSet<Shifts> Shifts => Set<Shifts>();
+        public DbSet<Tables> Tables => Set<Tables>();
+        public DbSet<Reservations> Reservations => Set<Reservations>();
     }
 }
