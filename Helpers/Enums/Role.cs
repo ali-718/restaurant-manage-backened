@@ -7,7 +7,7 @@ namespace Restaurant_Manage_Backened.Helpers.Enums
     {
         Other = 1,
         Admin = 2,
-        Employee = 3,
+        Kitchen = 3,
     }
 }
 
