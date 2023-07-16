@@ -8,6 +8,7 @@ namespace Restaurant_Manage_Backened.Helpers.Enums
         Other = 1,
         Admin = 2,
         Kitchen = 3,
+        Owner = 4,
     }
 }
 
