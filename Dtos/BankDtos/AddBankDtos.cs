@@ -1,15 +1,14 @@
-using System.ComponentModel.DataAnnotations;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using Restaurant_Manage_Backened.Models;
 
-namespace Restaurant_Manage_Backened.Models
+namespace Restaurant_Manage_Backened.Dtos.BankDtos
 {
-    public class Bank
+    public class AddBankDtos
     {
-        public int Id { get; set; }
-
         [Required]
         [StringLength(100, ErrorMessage = "Length should not be greater than 100")]
         public string Name { get; set; } = string.Empty;
@@ -20,6 +19,6 @@ namespace Restaurant_Manage_Backened.Models
         [Required]
         public string? account { get; set; }
         [Required]
-        public User? User { get; set; }
+        public int userId { get; set; }
     }
 }

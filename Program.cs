@@ -6,6 +6,9 @@ global using Microsoft.IdentityModel.Tokens;
 global using Microsoft.OpenApi.Models;
 global using Swashbuckle.AspNetCore.Filters;
 global using Restaurant_Manage_Backened.Helpers.Response;
+global using Restaurant_Manage_Backened.Services.BankServices;
+global using AutoMapper;
+global using Restaurant_Manage_Backened.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,6 +45,8 @@ builder.Services.AddAutoMapper(typeof(Program).Assembly);
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 builder.Services.AddScoped<ActionResponse>();
+builder.Services.AddScoped<BankService>();
+builder.Services.AddScoped<IBankService>(provider => provider!.GetService<BankService>()!);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
