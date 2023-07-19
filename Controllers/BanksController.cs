@@ -25,5 +25,19 @@ namespace Restaurant_Manage_Backened.Data
             var response = await _bankService.addBankDetails(bankDetails);
             return _response.GetActionResult(response);
         }
+
+        [HttpPost("updateBank")]
+        public async Task<ActionResult<ServiceResponse<string>>> updateBankDetails(updateBankDtos bankDetails)
+        {
+            var response = await _bankService.updateBankDetails(bankDetails);
+            return _response.GetActionResult(response);
+        }
+
+        [HttpDelete("deleteBank")]
+        public async Task<ActionResult<ServiceResponse<string>>> deleteBankDetails(int bankId)
+        {
+            var response = await _bankService.deleteBankDetails(bankId);
+            return _response.GetActionResult(response);
+        }
     }
 }

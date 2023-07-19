@@ -13,6 +13,7 @@ namespace Restaurant_Manage_Backened
         public AutoMapperProfile()
         {
             CreateMap<AddBankDtos, Bank>();
+            CreateMap<updateBankDtos, Bank>();
         }
     }
 }

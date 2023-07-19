@@ -35,19 +35,47 @@ namespace Restaurant_Manage_Backened.Services.BankServices
             catch (System.Exception e)
             {
                 response.isSuccess = false;
-                response.Message = e.InnerException.Message;
+                response.Message = e.Message;
             }
             return response;
         }
 
-        public Task<ServiceResponse<string>> deleteBankDetails(int bankId)
+        public async Task<ServiceResponse<string>> deleteBankDetails(int bankId)
         {
-            throw new NotImplementedException();
+            var response = new ServiceResponse<string>();
+            var bank = await _context.Banks.FirstOrDefaultAsync(b => b.Id == bankId);
+            if (bank is null)
+            {
+                response.isSuccess = false;
+                response.Message = "Invalid Bank Id";
+                return response;
+            }
+            _context.Banks.Remove(bank);
+            await _context.SaveChangesAsync();
+            response.data = "Data deleted successfully";
+            return response;
         }
 
-        public Task<ServiceResponse<string>> updateBankDetails(updateBankDtos bankDetails)
+        public async Task<ServiceResponse<string>> updateBankDetails(updateBankDtos bankDetails)
         {
-            throw new NotImplementedException();
+            var response = new ServiceResponse<string>();
+            try
+            {
+                var bank = await _context.Banks.FirstOrDefaultAsync(b => b.Id == bankDetails.Id && b!.User!.Id == bankDetails.UserId);
+                if (bank is null)
+                {
+                    throw new Exception("Invalid bank details");
+                }
+                _mapper.Map(bankDetails, bank);
+                await _context.SaveChangesAsync();
+                response.data = "Bank updated";
+            }
+            catch (System.Exception e)
+            {
+                response.isSuccess = false;
+                response.Message = e.Message;
+            }
+            return response;
         }
     }
 }
